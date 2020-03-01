@@ -1,3 +1,6 @@
+//Lab 1
+//Vincent Fearing
+//section# 25865
 #include <iostream>
 #include <string>
 
