@@ -165,7 +165,7 @@ unsigned f(unsigned n)
     n &= 0xFFFF00FFU;
     n ^= 0x000000FFU;
 
-    count = 0;
+    /*count = 0;
     num = n;
     for(int i = 32; i > 0; --i)
     {
@@ -186,7 +186,7 @@ unsigned f(unsigned n)
             count = 0;
         }
     }
-   cout << s << endl;
+   cout << s << endl;*/
 
     return n;
 }
