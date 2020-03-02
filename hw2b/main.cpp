@@ -13,13 +13,16 @@ void show(unsigned n);
 void wohs(unsigned n);
 unsigned ones(unsigned n);
 unsigned zeroes(unsigned n);
+unsigned f(unsigned n);
 
 int main()
 {
-    unsigned n = 256 + 12;
-    //show(n);
-    //wohs(n);
-    cout << "Number of ones: " << zeroes(n) << endl;
+    unsigned n = 300;
+    show(n);
+    wohs(n);
+    cout << ones(n) << endl;
+    cout << zeroes(n) << endl;
+    cout << f(n) << endl;
     return 0;
 }
 
@@ -129,4 +132,61 @@ unsigned zeroes(unsigned n)
         }
     }
     return zeros;
+}
+
+unsigned f(unsigned n)
+{
+    string r;
+    string s;
+    int num = n;
+    int count = 0;
+    for(int i = 32; i > 0; --i)
+    {
+        ++count;
+        if(num % 2 != 0)
+        {
+            r.insert(0, 1, '1');
+        }
+        else
+        {
+            r.insert(0, 1, '0');
+        }
+        num /= 2;
+
+        if(count == 8 && i > 1)
+        {
+            r.insert(0, 1, ' ');
+            count = 0;
+        }
+    }
+    cout << r << endl;
+
+    n |= 0x00FF0000U;
+    n &= 0xFFFF00FFU;
+    n ^= 0x000000FFU;
+
+    count = 0;
+    num = n;
+    for(int i = 32; i > 0; --i)
+    {
+        ++count;
+        if(num % 2 != 0)
+        {
+            s.insert(0, 1, '1');
+        }
+        else
+        {
+            s.insert(0, 1, '0');
+        }
+        num /= 2;
+
+        if(count == 8 && i > 1)
+        {
+            s.insert(0, 1, ' ');
+            count = 0;
+        }
+    }
+   cout << s << endl;
+
+    return n;
 }
