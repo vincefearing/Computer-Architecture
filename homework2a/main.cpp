@@ -1,5 +1,9 @@
+//Fearing, Vincent
+//Comp. Architecture M W
+//Section# 25865
 #include <iostream>
 #include <string>
+#include <cmath>
 
 using namespace std;
 
@@ -7,22 +11,23 @@ string add(string a, string b, int & flags);
 
 int main ()
 {
-    string a = "1111";
-    string b = "0011";
-    int flags = 0;
+    string a = "0110";
+    string b = "1010";
+    int flags = 20;
 
-    cout << add(a, b, flags);
+
+    cout << add(a, b, flags) << endl;
+    cout << flags << endl;
     
 }
 
 string add(string a, string b, int & flags)
 {
-    bool n = false;
-    bool z = false;
-    bool v = false;
+    flags = 0;
     int c = 0;
     int num = 0;
     string result;
+    string nzvc = "0000";
 
     for(int i = 3; i >= 0; --i)
     {
@@ -53,41 +58,58 @@ string add(string a, string b, int & flags)
     //N
     if(result[0] == '1')
     {
-        n = true;
+        //n = true;
+        nzvc[0] = '1';
     }
     else
     {
-        n = false;
+        //n = false;
+        nzvc[0] = '0';
     }
 
     //Z
     if(result == "0000")
     {
-        z = true;
+        nzvc[1] = '1';
     }
     else
     {
-        z = false;
+        nzvc[1] = '0';
     }
 
     //V
     if((a[0] == '0' && b[0] == '0') && result[0] == '1')
     {
-        v = true;
+        nzvc[2] = '1';
     }
     else if((a[0] == '1' && b[0] == '1') && result[0] == '0')
     {
-        v = true;
+        nzvc[2] = '1';
     }
     else 
     {
-        v = false;
+        nzvc[2] = '0';
     }
-    
-    cout << "N: " << n << endl;
-    cout << "Z: " << z << endl;
-    cout << "V: " << v << endl;
-    cout << "C: " << c << endl;
-    return result;
 
+    //C
+    if(c == 0)
+    {
+        nzvc[3] = '0';
+    }
+    else
+    {
+        nzvc[3] = '1';
+    }
+
+    float power = 0.0;
+    float base = 2.0;
+    for(int i = 3; i >= 0; --i)
+    {
+        if(nzvc[i] == '1')
+        {
+            flags += pow(base, power);
+        }
+        power++;
+    }
+    return result;
 }
