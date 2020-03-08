@@ -10,7 +10,7 @@ double calc(string sig, double power);
 
 int main ()
 {
-    string s = "10000001";
+    string s = "11110001";
     cout << convert(s) << endl;
     
     
@@ -23,7 +23,6 @@ double convert(string s)
     double ret = 0;
     string exponent = s.substr(1, 3);
     double power = bitsToDigit(s.substr(1, 3)) - 3;
-    cout << "Expo:" << power << endl;
     //double power = -2;
     
     //calculating exponents
@@ -39,6 +38,20 @@ double convert(string s)
         power = -2;
         ret = calc(significand, power);
     }
+    else if (exponent == "000" && significand == "0000")
+    {
+        ret = 0;
+    }
+    else if (exponent == "111" && significand == "0000")
+    {
+        ret = pow(2, 6000);
+    }
+    else if (exponent == "111" && significand != "0000")
+    {
+        ret = nan(0);
+    }
+    
+    
 
     if (sign == '1')
     {
@@ -78,21 +91,12 @@ double calc(string sig, double power)
         for(int i = 3; sig[i] != '1'; --i)
         {
             shift --;
-            cout << "shift:" << shift << endl;
-            sig.pop_back();
+            sig.pop_back(); //deleting extra zeros from significand
         }
     }
-    cout << "shift:" << shift << endl;
     //subtracting shift from exponent
     power -= shift;
-    cout << "Expo: " << power << endl;
-    //deleting extra zeros from significand
-    /*if(shift == 3)
-    {
-        sig.pop_back();
-    }*/
     ret = bitsToDigit(sig);
-    cout << "Ret:" << ret << endl;
     ret *= pow(2, power);
     return ret;
 }
