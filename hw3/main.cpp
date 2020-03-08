@@ -6,11 +6,11 @@ using namespace std;
 
 double convert(string s);
 double bitsToDigit(string s);
-double calc(string sig, double expo);
+double calc(string sig, double power);
 
 int main ()
 {
-    string s = "11101110";
+    string s = "10000001";
     cout << convert(s) << endl;
     
     
@@ -21,19 +21,23 @@ double convert(string s)
     char sign = s[0];
     string significand = s.substr(4, 7);
     double ret = 0;
-    double expo = bitsToDigit(s.substr(1, 3)) - 3;
+    string exponent = s.substr(1, 3);
+    double power = bitsToDigit(s.substr(1, 3)) - 3;
+    cout << "Expo:" << power << endl;
+    //double power = -2;
     
     //calculating exponents
 
-    if(expo != 0 && expo != 7)
+    if(exponent != "000" && exponent != "111")
     {
         //inserting 1 at the beginning of significand
         significand.insert(0, 1, '1');
-        ret = calc(significand, expo);
+        ret = calc(significand, power);
     }
-    else if (expo == 0 && significand != "0000")
+    else if (exponent == "000" && significand != "0000")
     {
-        
+        power = -2;
+        ret = calc(significand, power);
     }
 
     if (sign == '1')
@@ -63,27 +67,32 @@ double bitsToDigit(string s)
     return ret;
 }
 
-double calc(string sig, double expo)
+double calc(string sig, double power)
 {
     double ret = 0;
-    cout << "Expo: " << expo << endl;
+    cout << "Expo: " << power << endl;
     //Counting decimal places
-    double shift = 3;
-    for(int i = 4; sig[i] == '1'; --i)
+    double shift = 4;
+    if(sig[4] == '0')
     {
-        shift --;
+        for(int i = 3; sig[i] != '1'; --i)
+        {
+            shift --;
+            cout << "shift:" << shift << endl;
+            sig.pop_back();
+        }
     }
     cout << "shift:" << shift << endl;
     //subtracting shift from exponent
-    expo -= shift;
-    cout << "Expo: " << expo << endl;
+    power -= shift;
+    cout << "Expo: " << power << endl;
     //deleting extra zeros from significand
-    if(shift == 3)
+    /*if(shift == 3)
     {
         sig.pop_back();
-    }
+    }*/
     ret = bitsToDigit(sig);
     cout << "Ret:" << ret << endl;
-    ret *= pow(2, expo);
+    ret *= pow(2, power);
     return ret;
 }
