@@ -6,6 +6,7 @@ using namespace std;
 
 double convert(string s);
 double bitsToDigit(string s);
+double calc(string sig, double expo);
 
 int main ()
 {
@@ -28,33 +29,21 @@ double convert(string s)
     {
         //inserting 1 at the beginning of significand
         significand.insert(0, 1, '1');
-        cout << "Expo: " << expo << endl;
-        //Counting decimal places
-        double shift = 3;
-        for(int i = 4; significand[i] == '1'; --i)
-        {
-            shift --;
-        }
-        cout << "shift:" << shift << endl;
-        //subtracting shift from exponent
-        expo -= shift;
-        cout << "Expo: " << expo << endl;
-        //deleting extra zeros from significand
-        if(shift == 3)
-        {
-            significand.pop_back();
-        }
-        ret = bitsToDigit(significand);
-        cout << "Ret:" << ret << endl;
-        ret *= pow(2, expo);
+        ret = calc(significand, expo);
+    }
+    else if (expo == 0 && significand != "0000")
+    {
+        
     }
 
     if (sign == '1')
     {
-        ret *= -1;
+        return ret *= -1;
     }
-
-    return ret;
+    else
+    {
+        return ret;
+    }
 }
 
 //Takes a string of bits and converts to a digit
@@ -71,5 +60,30 @@ double bitsToDigit(string s)
     }
     power++;
     }
+    return ret;
+}
+
+double calc(string sig, double expo)
+{
+    double ret = 0;
+    cout << "Expo: " << expo << endl;
+    //Counting decimal places
+    double shift = 3;
+    for(int i = 4; sig[i] == '1'; --i)
+    {
+        shift --;
+    }
+    cout << "shift:" << shift << endl;
+    //subtracting shift from exponent
+    expo -= shift;
+    cout << "Expo: " << expo << endl;
+    //deleting extra zeros from significand
+    if(shift == 3)
+    {
+        sig.pop_back();
+    }
+    ret = bitsToDigit(sig);
+    cout << "Ret:" << ret << endl;
+    ret *= pow(2, expo);
     return ret;
 }
