@@ -1,3 +1,6 @@
+// Vincent Fearing
+// HW#3
+// Section # 25865
 #include <iostream>
 #include <string>
 #include <cmath>
